@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+from flask_bcrypt import Bcrypt
+# from flask.ext.bcrypt import Bcrypt
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
 from models import User, Recipe
+
+bcrypt = Bcrypt(app)
 
 class Signup(Resource):
     pass
