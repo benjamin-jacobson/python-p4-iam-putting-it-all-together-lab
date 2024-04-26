@@ -106,7 +106,24 @@ class Login(Resource):
         return {'error':'401: Username and/or password incorrect.'}, 401
 
 class Logout(Resource):
-    pass
+    """
+    Handle logout by implementing a DELETE /logout route. It should:
+
+    Be handled in a Logout resource with a delete() method.
+    In the delete() method, if the user is logged in (if their user_id is in the session object):
+    Remove the user's ID from the session object.
+    Return an empty response with an HTTP status code of 204 (No Content).
+    If the user is not logged in when they make the request:
+    Return a JSON response with an error message, and a status of 401 (Unauthorized).
+    """
+    def delete(self):
+
+        if not session['user_id']:
+            return {'error':'401 Unathorized. User not logged in.'}, 401
+        
+        # If there is a user_id
+        session['user_id'] = None
+        return {}, 204
 
 class RecipeIndex(Resource):
     pass
