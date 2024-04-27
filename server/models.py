@@ -57,12 +57,12 @@ class Recipe(db.Model, SerializerMixin):
         return f'<Recipe {self.id}: {self.title}>'
 
     @validates('instructions')
-    def validates_instructions(self,key,instructions):
-        if len(instructions) < 50:
+    def validates_instructions(self, key, instructions):
+        if len(instructions) > 50:
+            return instructions
             #raise ValueError('instructions content is at least 50 characters')
-            raise IntegrityError('instructions content is at least 50 characters') # Need to fx hi
-        return instructions
-
+        else:
+            IntegrityError('422 Unprocessable Entity instructions content is at least 50 characters', params=None, orig=None)
 
 if __name__ == "__main__":
     print("Hello, World!")
@@ -83,12 +83,4 @@ if __name__ == "__main__":
                             image_url = image_url,
                             bio = bio)
     new_user.password_hash = password
-    prinnt(new_user)
-
-    # try:
-    #     db.session.add(new_user)
-    #     db.session.commit()
-
-    #     user = User.query.filter(User.username == username).first() # so that have user id too
-    #     session['user_id'] = user.id # saving use session
-    #     return user.to_dict(), 201
+    print(new_user)
